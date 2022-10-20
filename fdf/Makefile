@@ -1,5 +1,5 @@
 #MAIN
-NAME = fdf.out
+NAME = fdf
 
 #LIBS
 LIBFT = ft
@@ -15,10 +15,19 @@ RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror -g
 
 #FILES
-SRCS = fdf.c line_handler.c x.c mlx_handlers/init_mlx.c mlx_handlers/image_utils.c mlx_handlers/input_utils.c
+SRCS = fdf.c x.c \
+	map_utils/read_map.c \
+	map_utils/draw_map.c \
+	map_utils/line_handler.c \
+	mlx_handlers/init_mlx.c \
+	mlx_handlers/image_utils.c \
+	mlx_handlers/input_utils.c \
+	image_utils/invert_int_matrix.c \
+	general_util/swap.c \
+	general_util/ptrstrlen.c
 OBJS = $(SRCS:%.c=%.o)
 
-all:	$(NAME) clean
+all:	$(NAME)
 
 $(NAME):	$(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_PATH) -l$(LIBFT) $(MINILIBX)

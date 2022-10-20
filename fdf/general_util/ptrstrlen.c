@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_utils.c                                      :+:      :+:    :+:   */
+/*   ptrstrlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/14 04:09:02 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/18 07:48:59 by rmiranda         ###   ########.fr       */
+/*   Created: 2022/10/20 11:23:09 by rmiranda          #+#    #+#             */
+/*   Updated: 2022/10/20 12:07:24 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int	action_hook(int keycode, t_mlx *window)
+int	ptrstrlen(t_map	**ptr)
 {
-	if (keycode == XK_space)
-		space(window);
-	if (keycode == XK_Escape)
-		escape(window);
-    if (keycode == XK_b || keycode == XK_B)
-		blue(window);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (*ptr++)
+		i++;
+	return (i);
 }
 
-void    init_input(t_mlx *window)
+int	mapstrlen(t_map	*ptr)
 {
-    mlx_key_hook (window->window, &action_hook, window);
-	mlx_loop(window->ptr);
+	int	i;
+
+	i = 0;
+	while (ptr++)
+		i++;
+	return (i);
 }

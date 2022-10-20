@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_utils.c                                      :+:      :+:    :+:   */
+/*   map_utils.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/14 04:09:02 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/18 07:48:59 by rmiranda         ###   ########.fr       */
+/*   Created: 2022/09/20 04:10:11 by rmiranda          #+#    #+#             */
+/*   Updated: 2022/10/18 07:59:22 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#ifndef MAP_UTILS_H
+# define MAP_UTILS_H
 
-int	action_hook(int keycode, t_mlx *window)
-{
-	if (keycode == XK_space)
-		space(window);
-	if (keycode == XK_Escape)
-		escape(window);
-    if (keycode == XK_b || keycode == XK_B)
-		blue(window);
-	return (0);
-}
+# include "../fdf.h"
 
-void    init_input(t_mlx *window)
-{
-    mlx_key_hook (window->window, &action_hook, window);
-	mlx_loop(window->ptr);
-}
+// typedef struct s_map
+// {
+// 	int	x;
+// 	int	y;
+// 	int		z;
+// }	t_map;
+
+// char	*open_map(char *path);
+
+#endif

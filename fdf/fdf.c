@@ -6,28 +6,24 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 08:23:30 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/09/14 05:41:34 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:29:53 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
-	t_mlx_window	*window;
+	t_mlx	*window;
 
-	window = init_window(640, 360, "rmiranda | FDF");
+	if (argc != 2)
+		return (ft_printf("Usage: ./fdf \"map_path\"\n"));
+	window = init_mlx(500, 500, "rmiranda | FDF");
 	if (!window)
 		return (0);
-	window->image = init_image(window);
-	if (!window->image)
-	{
-		mlx_destroy_window(window->ptr, window->window);
-		mlx_destroy_display (window->ptr);
-		free(window->ptr);
-		free(window);
-		return (0);
-	}
+	if (get_map(argv[1], window))
+		return (ft_printf("Erro ao carregar o mapa\n"));
+	ft_printf("%i\n", window->map_size_x);
 	init_input(window);
-	return (0);
+	return (1);
 }
