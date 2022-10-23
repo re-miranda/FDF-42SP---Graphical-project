@@ -6,97 +6,97 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 09:10:36 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/20 09:46:03 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/23 10:25:11 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-void	bresenham(int x0, int y0, int x1, int y1, t_mlx *window)
+static void	y_axis_pixel(t_bresen *bresen, t_mlx *window)
 {
-	int	x;
-	int	y;
-	int	dx;
-	int	dy;
-	int	adx;
-	int	ady;
-	int	sx;
-	int	sy;
-	int	eps;
+	// pixel_put(img, bresen->x0, bresen->y0, start->color);
+	pixel_to_image(window, window->color, bresen->x0, bresen->y0);
+	bresen->eps += bresen->adx;
+	if (bresen->eps * 2 >= bresen->ady)
+	{
+		bresen->x0 += bresen->sx;
+		bresen->eps -= bresen->ady;
+	}
+}
 
-	x = x0;
-	y = y0;
-	dx = x1 - x0;
-	dy = y1 - y0;
-	adx = ft_abs(dx);
-	ady = ft_abs(dy);
-	sx = -1;
-	if (dx > 0)
-		sx = 1;
-	sy = -1;
-	if (dy > 0)
-		sy = 1;
-	eps = 0;
-	if (adx > ady)
+static void	x_axis_pixel(t_bresen *bresen, t_mlx *window)
+{
+	// pixel_put(img, start->x, start->y, start->color);
+	pixel_to_image(window, window->color, bresen->x0, bresen->y0);
+	bresen->eps += bresen->ady;
+	if (bresen->eps * 2 >= bresen->adx)
 	{
-		if (dx < 0)
-		{
-			while (x >= x1)
-			{
-				mlx_put_image_to_window (window->ptr, window->window, window->img->ptr, 0, 0);
-				pixel_to_image(window, window->color, x, y);
-				eps += ady;
-				if (eps << 1 >= adx)
-				{
-					y += sy;
-					eps -= adx;
-				}
-				x += sx;
-			}
-		} else
-		{
-			while (x <= x1)
-			{
-				mlx_put_image_to_window (window->ptr, window->window, window->img->ptr, 0, 0);
-				pixel_to_image(window, window->color, x, y);
-				eps += ady;
-				if (eps << 1 >= adx)
-				{
-					y += sy;
-					eps -= adx;
-				}
-				x += sx;
-			}
-		}
-	} else
+		bresen->y0 += bresen->sy;
+		bresen->eps -= bresen->adx;
+	}
+}
+
+static void	y_axis_fast(t_bresen *bresen, t_mlx *window)
+{
+	if (bresen->sy < 0)
 	{
-		if (dy < 0)
+		while (bresen->y0 >= bresen->y1)
 		{
-			while (y >= y1)
-			{
-				mlx_put_image_to_window (window->ptr, window->window, window->img->ptr, 0, 0);
-				pixel_to_image(window, window->color, x, y);
-				eps += adx;
-				if (eps << 1 >= ady) {
-					x += sx;
-					eps -= ady;
-				}
-				y += sy;
-			}
-		} else
-		{
-			while (y <= y1)
-			{
-				mlx_put_image_to_window (window->ptr, window->window, window->img->ptr, 0, 0);
-				pixel_to_image(window, window->color, x, y);
-				eps += adx;
-				if (eps << 1 >= ady) {
-					x += sx;
-					eps -= ady;
-				}
-				y += sy;
-			}
+			y_axis_pixel(bresen, window);
+			bresen->y0 += bresen->sy;
 		}
 	}
-	return ;
+	else
+	{
+		while (bresen->y0 <= bresen->y1)
+		{
+			y_axis_pixel(bresen, window);
+			bresen->y0 += bresen->sy;
+		}
+	}
+}
+
+static void	x_axis_fast(t_bresen *bresen, t_mlx *window)
+{
+	if (bresen->sx < 0)
+	{
+		while (bresen->x0 >= bresen->x1)
+		{
+			x_axis_pixel(bresen, window);
+			bresen->x0 += bresen->sx;
+		}
+	}
+	else
+	{
+		while (bresen->x0 <= bresen->x1)
+		{
+			x_axis_pixel(bresen, window);
+			bresen->x0 += bresen->sx;
+		}
+	}
+}
+
+void	bresenham(int x0, int y0, int x1, int y1, t_mlx *window)
+{
+	t_bresen	bresen;
+
+	bresen.x0 = x0;
+	bresen.x1 = x1;
+	bresen.y0 = y0;
+	bresen.y1 = y1;
+	bresen.dx = bresen.x1 - bresen.x0;
+	bresen.dy = bresen.y1 - bresen.y0;
+	bresen.adx = ft_abs(bresen.dx);
+	bresen.ady = ft_abs(bresen.dy);
+	bresen.sx = -1;
+	if (bresen.dx > 0)
+		bresen.sx = 1;
+	bresen.sy = -1;
+	if (bresen.dy > 0)
+		bresen.sy = 1;
+	bresen.eps = 0;
+	if (bresen.adx > bresen.ady)
+		x_axis_fast(&bresen, window);
+	else
+		y_axis_fast(&bresen, window);
 }

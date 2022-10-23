@@ -18,6 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 SRCS = fdf.c x.c \
 	map_utils/read_map.c \
 	map_utils/draw_map.c \
+	map_utils/transform_map.c \
 	map_utils/line_handler.c \
 	mlx_handlers/init_mlx.c \
 	mlx_handlers/image_utils.c \

@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 08:23:48 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/20 12:28:28 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/23 10:21:28 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,21 @@
 # include "mlx.h"
 # include <X11/keysym.h>
 # include "map_utils/map_utils.h"
+
+typedef struct s_bresen
+{
+	int x0;
+	int y0;
+	int x1;
+	int y1;
+	int dx;
+	int dy;
+	int adx;
+	int ady;
+	int sx;
+	int sy;
+	int eps;
+}	t_bresen;
 
 typedef struct s_map
 {
@@ -45,6 +60,7 @@ typedef struct s_mlx
 	int		map_size_x;
 	int		map_size_y;
 	int		color;
+	int		global_multiplier;
 }	t_mlx;
 
 // X
@@ -74,11 +90,16 @@ void	init_input(t_mlx *window);
 
 // MAP_UTILS
 int	get_map(char *path, t_mlx *window);
+void	linear_translate(int x, int y, t_mlx *window);
+void	exponential_multiply(int x, int y, t_mlx *window);
 
 // GENERAL_UTILS
 void	int_swap(int *a, int *b);
 void	pointer_swap(void **a, void **b);
 int		ptrstrlen(t_map	**ptr);
 int		mapstrlen(t_map	*ptr);
+
+// TRANSFORM_MAP
+t_map	*get_next_node(t_mlx *window);
 
 #endif

@@ -6,13 +6,18 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:14:54 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/20 12:28:45 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/22 06:04:35 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "map_utils.h"
 #include "../fdf.h"
 #include <fcntl.h>
+
+static int	get_multiplier(t_mlx *window)
+{
+	return (ft_abs(window->map_size_x / window->size_x * 0.7));
+}
 
 static t_map	**load_map(char *crude_map, int x, int y)
 {
@@ -43,6 +48,7 @@ static t_map	**load_map(char *crude_map, int x, int y)
 		}
 		free(split_map[y]);
 	}
+	free(split_map);
 	return (formatted_map);
 }
 
@@ -102,6 +108,7 @@ int	get_map(char *path, t_mlx *window)
 	}
 	window->map_size_x = x;
 	window->map_size_y = y;
+	window->global_multiplier = get_multiplier(window);
 	window->map = load_map(file_contents, x, y);
 	free(file_contents);
 	if (!window->map)

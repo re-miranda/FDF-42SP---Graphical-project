@@ -20,6 +20,22 @@ int	action_hook(int keycode, t_mlx *window)
 		escape(window);
     if (keycode == XK_b || keycode == XK_B)
 		blue(window);
+    if (keycode == XK_Up)
+		linear_translate(0, -10, window);
+    if (keycode == XK_Down)
+		linear_translate(0, 10, window);
+    if (keycode == XK_Left)
+		linear_translate(-10, 0, window);
+    if (keycode == XK_Right)
+		linear_translate(10, 0, window);
+    if (keycode == XK_x)
+		exponential_multiply(20, 20, window);
+    if (keycode == XK_c)
+	{
+		ft_printf("\n");
+		ft_printf("\n");
+		ft_printf("\n");
+	}
 	return (0);
 }
 
