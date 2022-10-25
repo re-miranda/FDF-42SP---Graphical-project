@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 08:23:48 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/23 10:21:28 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/25 02:26:02 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,20 @@
 # include "libft_gnl_printf.h"
 # include "mlx.h"
 # include <X11/keysym.h>
-# include "map_utils/map_utils.h"
 
 typedef struct s_bresen
 {
-	int x0;
-	int y0;
-	int x1;
-	int y1;
-	int dx;
-	int dy;
-	int adx;
-	int ady;
-	int sx;
-	int sy;
-	int eps;
+	int	x0;
+	int	y0;
+	int	x1;
+	int	y1;
+	int	dx;
+	int	dy;
+	int	adx;
+	int	ady;
+	int	sx;
+	int	sy;
+	int	eps;
 }	t_bresen;
 
 typedef struct s_map
@@ -51,55 +50,45 @@ typedef struct s_mlx_img
 
 typedef struct s_mlx
 {
-	void	*ptr;
-	void	*window;
-	int		size_x;
-	int		size_y;
+	void		*ptr;
+	void		*window;
+	int			size_x;
+	int			size_y;
 	t_mlx_img	*img;
-	t_map	**map;
-	int		map_size_x;
-	int		map_size_y;
-	int		color;
-	int		global_multiplier;
+	t_map		**map;
+	int			map_size_x;
+	int			map_size_y;
+	int			color;
+	int			global_multiplier;
 }	t_mlx;
 
-// X
-void	blue(t_mlx *window);
-void	escape(t_mlx *window);
-void	space(t_mlx *window);
+// MLX_INIT
+t_mlx_img	*init_image(t_mlx *mlx, int size_x, int size_y);
+void		destroy_image(t_mlx *mlx);
+t_mlx		*init_mlx(int size_x, int size_y, char *window_title);
+// MLX_INPUT
+int			action_hook(int keycode, t_mlx *mlx);
+void		init_input(t_mlx *mlx);
+// MLX_PIXEL_TOOLS
+int			rgb_to_int(unsigned char red, unsigned char green, unsigned char blue);
+void		pixel_to_image(t_mlx *mlx, int color, int x, int y);
 
-// LINE_HANDLER
-void	bresenham(int x0, int y0, int x1, int y1, t_mlx *window);
-void	draw_map(t_mlx *window);
+// BRESENHAM_LINE
+void		bresenham(int x0, int y0, int x1, int y1, t_mlx *mlx);
+// MAP_DRAW
+void		draw_map(t_mlx *mlx);
+// PUT_TO_SCREEN
+void		put_map(t_mlx *mlx);
+void		put_blue_screen(t_mlx *mlx);
 
-// INIT_MLX
-t_mlx_img		*init_image(t_mlx *window, int size_x, int size_y);
-void		destroy_image(t_mlx *window);
-t_mlx	*init_mlx(int size_x, int size_y, char *window_title);
+// MAP_LOAD
+int			get_map(char *path, t_mlx *mlx);
+// MAP_TOOLS
+void		linear_translate(int x, int y, t_mlx *mlx);
+void		exponential_multiply(int x, int y, t_mlx *mlx);
 
-// IMAGE_UTILS
-int		rgb_to_int(unsigned char red, unsigned char green, unsigned char blue);
-void	pixel_to_image(t_mlx *window, int color, int x, int y);
-int		*get_pixel_addr(t_mlx *window, int x, int y);
-void	x_invert_int_matrix(int *matrix, int width, int height);
-void	y_invert_int_matrix(int *matrix, int width, int height);
+// EXIT_ROUTINES.C
+void		escape(t_mlx *mlx);
 
-// INPUT_UTILS
-int		action_hook(int keycode, t_mlx *window);
-void	init_input(t_mlx *window);
-
-// MAP_UTILS
-int	get_map(char *path, t_mlx *window);
-void	linear_translate(int x, int y, t_mlx *window);
-void	exponential_multiply(int x, int y, t_mlx *window);
-
-// GENERAL_UTILS
-void	int_swap(int *a, int *b);
-void	pointer_swap(void **a, void **b);
-int		ptrstrlen(t_map	**ptr);
-int		mapstrlen(t_map	*ptr);
-
-// TRANSFORM_MAP
-t_map	*get_next_node(t_mlx *window);
 
 #endif

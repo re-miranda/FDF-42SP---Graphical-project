@@ -15,17 +15,15 @@ RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror -g
 
 #FILES
-SRCS = fdf.c x.c \
-	map_utils/read_map.c \
-	map_utils/draw_map.c \
-	map_utils/transform_map.c \
-	map_utils/line_handler.c \
-	mlx_handlers/init_mlx.c \
-	mlx_handlers/image_utils.c \
-	mlx_handlers/input_utils.c \
-	image_utils/invert_int_matrix.c \
-	general_util/swap.c \
-	general_util/ptrstrlen.c
+SRCS = fdf.c exit_routines.c \
+	render/bresenham_line.c \
+	render/map_draw.c \
+	render/put_to_screen.c \
+	mlx_handlers/mlx_init.c \
+	mlx_handlers/mlx_input.c \
+	mlx_handlers/mlx_pixel_tools.c \
+	map_utils/map_load.c \
+	map_utils/map_tools.c
 OBJS = $(SRCS:%.c=%.o)
 
 all:	$(NAME)

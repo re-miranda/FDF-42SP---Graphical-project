@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptrstrlen.c                                        :+:      :+:    :+:   */
+/*   exit_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 11:23:09 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/20 12:07:24 by rmiranda         ###   ########.fr       */
+/*   Created: 2022/10/23 23:52:30 by rmiranda          #+#    #+#             */
+/*   Updated: 2022/10/25 02:34:02 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
-int	ptrstrlen(t_map	**ptr)
+static void	free_map(t_mlx *mlx)
 {
 	int	i;
 
-	i = 0;
-	while (*ptr++)
-		i++;
-	return (i);
+	i = mlx->map_size_y;
+	while (i--)
+		free(mlx->map[i]);
+	free(mlx->map);
 }
 
-int	mapstrlen(t_map	*ptr)
+void	escape(t_mlx *mlx)
 {
-	int	i;
-
-	i = 0;
-	while (ptr++)
-		i++;
-	return (i);
+	mlx_destroy_window (mlx->ptr, mlx->window);
+	mlx_destroy_display (mlx->ptr);
+	if (mlx->ptr)
+		free(mlx->ptr);
+	free_map(mlx);
+	if (mlx)
+		free(mlx);
+	exit (0);
 }

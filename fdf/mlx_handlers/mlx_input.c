@@ -1,46 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_utils.c                                      :+:      :+:    :+:   */
+/*   mlx_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 04:09:02 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/18 07:48:59 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/25 02:31:19 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int	action_hook(int keycode, t_mlx *window)
+int	action_hook(int keycode, t_mlx *mlx)
 {
-	if (keycode == XK_space)
-		space(window);
 	if (keycode == XK_Escape)
-		escape(window);
+		escape(mlx);
+	if (keycode == XK_space)
+		put_map(mlx);
     if (keycode == XK_b || keycode == XK_B)
-		blue(window);
+		put_blue_screen(mlx);
     if (keycode == XK_Up)
-		linear_translate(0, -10, window);
+		linear_translate(0, -10, mlx);
     if (keycode == XK_Down)
-		linear_translate(0, 10, window);
+		linear_translate(0, 10, mlx);
     if (keycode == XK_Left)
-		linear_translate(-10, 0, window);
+		linear_translate(-10, 0, mlx);
     if (keycode == XK_Right)
-		linear_translate(10, 0, window);
+		linear_translate(10, 0, mlx);
     if (keycode == XK_x)
-		exponential_multiply(20, 20, window);
-    if (keycode == XK_c)
-	{
-		ft_printf("\n");
-		ft_printf("\n");
-		ft_printf("\n");
-	}
+		exponential_multiply(20, 20, mlx);
 	return (0);
 }
 
-void    init_input(t_mlx *window)
+void    init_input(t_mlx *mlx)
 {
-    mlx_key_hook (window->window, &action_hook, window);
-	mlx_loop(window->ptr);
+    mlx_key_hook (mlx->window, &action_hook, mlx);
+	mlx_loop(mlx->ptr);
 }

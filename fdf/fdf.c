@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 08:23:30 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/20 12:29:53 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/25 02:28:52 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 int	main(int argc, char *argv[])
 {
-	t_mlx	*window;
+	t_mlx	*mlx;
 
 	if (argc != 2)
 		return (ft_printf("Usage: ./fdf \"map_path\"\n"));
-	window = init_mlx(500, 500, "rmiranda | FDF");
-	if (!window)
+	mlx = init_mlx(500, 500, "rmiranda | FDF");
+	if (!mlx)
 		return (0);
-	if (get_map(argv[1], window))
+	if (get_map(argv[1], mlx))
 		return (ft_printf("Erro ao carregar o mapa\n"));
-	ft_printf("%i\n", window->map_size_x);
-	init_input(window);
+	init_input(mlx);
 	return (1);
 }
