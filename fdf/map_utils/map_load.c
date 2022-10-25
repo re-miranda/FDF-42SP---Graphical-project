@@ -6,18 +6,13 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:14:54 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 02:31:58 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:27:37 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "map_utils.h"
 #include "../fdf.h"
 #include <fcntl.h>
-
-static int	get_multiplier(t_mlx *mlx)
-{
-	return (ft_abs(mlx->map_size_x / mlx->size_x * 0.7));
-}
 
 static t_map	**load_map(char *crude_map, int x, int y)
 {
@@ -59,7 +54,11 @@ static int	count_digits_in_line(char *line)
 	x = 0;
 	while (*line && *line != '\n')
 		if (ft_isdigit(*line++))
+		{
 			x++;
+			while (ft_isdigit(*line))
+				line++;
+		}
 	return (x);
 }
 
@@ -108,10 +107,10 @@ int	get_map(char *path, t_mlx *mlx)
 	}
 	mlx->map_size_x = x;
 	mlx->map_size_y = y;
-	mlx->global_multiplier = get_multiplier(mlx);
 	mlx->map = load_map(file_contents, x, y);
 	free(file_contents);
 	if (!mlx->map)
 		return (3);
+	isometric_projection(40, 20, mlx);
 	return (0);
 }

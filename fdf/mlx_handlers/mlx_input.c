@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 04:09:02 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 02:31:19 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:39:16 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,20 @@ int	action_hook(int keycode, t_mlx *mlx)
 		escape(mlx);
 	if (keycode == XK_space)
 		put_map(mlx);
-    if (keycode == XK_b || keycode == XK_B)
+	if (keycode == XK_b || keycode == XK_B)
 		put_blue_screen(mlx);
-    if (keycode == XK_Up)
-		linear_translate(0, -10, mlx);
-    if (keycode == XK_Down)
-		linear_translate(0, 10, mlx);
-    if (keycode == XK_Left)
-		linear_translate(-10, 0, mlx);
-    if (keycode == XK_Right)
-		linear_translate(10, 0, mlx);
-    if (keycode == XK_x)
-		exponential_multiply(20, 20, mlx);
+	if (keycode == XK_Up)
+		map_node_iterate(func_translate_up, mlx);
+	if (keycode == XK_Down)
+		map_node_iterate(func_translate_down, mlx);
+	if (keycode == XK_Left)
+		map_node_iterate(func_translate_left, mlx);
+	if (keycode == XK_Right)
+		map_node_iterate(func_translate_right, mlx);
+	if (keycode == XK_x)
+		map_node_iterate(func_increase_z, mlx);
+	if (keycode == XK_z)
+		map_node_iterate(func_decrease_z, mlx);
 	return (0);
 }
 
