@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 08:23:48 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 10:30:30 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:23:19 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_mlx
 	int			map_size_x;
 	int			map_size_y;
 	int			color;
-	double		global_multiplier;
+	int			global_multiplier;
 }	t_mlx;
 
 // MLX_INIT
@@ -70,7 +70,7 @@ t_mlx		*init_mlx(int size_x, int size_y, char *window_title);
 int			action_hook(int keycode, t_mlx *mlx);
 void		init_input(t_mlx *mlx);
 // MLX_PIXEL_TOOLS
-int			rgb_to_int(unsigned char red, unsigned char green, unsigned char blue);
+int			rgb_to_int(unsigned char r, unsigned char g, unsigned char b);
 void		pixel_to_image(t_mlx *mlx, int color, int x, int y);
 
 // BRESENHAM_LINE
@@ -81,18 +81,25 @@ void		draw_map(t_mlx *mlx);
 void		put_map(t_mlx *mlx);
 void		put_blue_screen(t_mlx *mlx);
 
-// MAP_FUNCS
+// MAP_CENTRALIZE
+void		map_centralize(t_mlx *mlx);
+// MAP_ISOMETRIC
+void		isometric_projection(t_mlx *mlx);
+// MAP_FUNCS_TRANSFORM
 void		func_translate_up(t_map *node_addr, t_mlx *mlx);
 void		func_translate_down(t_map *node_addr, t_mlx *mlx);
 void		func_translate_right(t_map *node_addr, t_mlx *mlx);
 void		func_translate_left(t_map *node_addr, t_mlx *mlx);
+// MAP_FUNCS_ZOOM
+void		func_multiply_up(t_map *node_addr, t_mlx *mlx);
+void		func_multiply_down(t_map *node_addr, t_mlx *mlx);
 void		func_increase_z(t_map *node_addr, t_mlx *mlx);
 void		func_decrease_z(t_map *node_addr, t_mlx *mlx);
 // MAP_LOAD
 int			get_map(char *path, t_mlx *mlx);
 // MAP_TOOLS
+t_map		*get_next_node(t_mlx *mlx);
 void		map_node_iterate(void (*f)(t_map *, t_mlx *), t_mlx *mlx);
-void		isometric_projection(int x, int y, t_mlx *mlx);
 
 // EXIT_ROUTINES.C
 void		escape(t_mlx *mlx);

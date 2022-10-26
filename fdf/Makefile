@@ -22,9 +22,12 @@ SRCS = fdf.c exit_routines.c \
 	mlx_handlers/mlx_init.c \
 	mlx_handlers/mlx_input.c \
 	mlx_handlers/mlx_pixel_tools.c \
-	map_utils/map_funcs.c \
+	map_utils/map_funcs_transform.c \
+	map_utils/map_funcs_zoom.c \
 	map_utils/map_load.c \
-	map_utils/map_tools.c
+	map_utils/map_tools.c \
+	map_utils/map_isometric.c \
+	map_utils/map_centralize.c
 OBJS = $(SRCS:%.c=%.o)
 
 all:	$(NAME)

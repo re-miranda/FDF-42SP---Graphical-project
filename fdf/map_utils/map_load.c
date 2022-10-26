@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:14:54 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 10:27:37 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:21:42 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ static t_map	**load_map(char *crude_map, int x, int y)
 			{
 				formatted_map[y][xi].x = xi;
 				formatted_map[y][xi].y = y;
-				formatted_map[y][xi].z = ft_atoi(split_map[y] + (i));
+				formatted_map[y][xi].z = ft_atoi(split_map[y] + i);
 				xi++;
 			}
 			if (split_map[y][i] == '-')
+				i++;
+			while (ft_isdigit(split_map[y][i]))
 				i++;
 			i++;
 		}
@@ -111,6 +113,6 @@ int	get_map(char *path, t_mlx *mlx)
 	free(file_contents);
 	if (!mlx->map)
 		return (3);
-	isometric_projection(40, 20, mlx);
+	isometric_projection(mlx);
 	return (0);
 }

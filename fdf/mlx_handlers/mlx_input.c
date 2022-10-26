@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 04:09:02 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 10:39:16 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:10:48 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	action_hook(int keycode, t_mlx *mlx)
 	if (keycode == XK_Escape)
 		escape(mlx);
 	if (keycode == XK_space)
-		put_map(mlx);
+		map_centralize(mlx);
 	if (keycode == XK_b || keycode == XK_B)
 		put_blue_screen(mlx);
 	if (keycode == XK_Up)
@@ -32,11 +32,15 @@ int	action_hook(int keycode, t_mlx *mlx)
 		map_node_iterate(func_increase_z, mlx);
 	if (keycode == XK_z)
 		map_node_iterate(func_decrease_z, mlx);
+	if (keycode == XK_i)
+		map_node_iterate(func_multiply_up, mlx);
+	if (keycode == XK_o)
+		map_node_iterate(func_multiply_down, mlx);
 	return (0);
 }
 
-void    init_input(t_mlx *mlx)
+void	init_input(t_mlx *mlx)
 {
-    mlx_key_hook (mlx->window, &action_hook, mlx);
+	mlx_key_hook (mlx->window, &action_hook, mlx);
 	mlx_loop(mlx->ptr);
 }

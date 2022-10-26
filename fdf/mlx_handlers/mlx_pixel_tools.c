@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 04:18:19 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 02:31:31 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:24:01 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	*get_pixel_addr(t_mlx *mlx, int x, int y)
 		return (NULL);
 	offset_bytes = x * mlx->img->bits_per_pixel / 8;
 	offset_bytes += y * mlx->img->size_line;
-	return (int *)(mlx->img->addr + offset_bytes);
+	return ((int *)(mlx->img->addr + offset_bytes));
 }
 
 void	pixel_to_image(t_mlx *mlx, int color, int x, int y)
@@ -34,15 +34,15 @@ void	pixel_to_image(t_mlx *mlx, int color, int x, int y)
 		*pixel_addr = color;
 }
 
-int	rgb_to_int(unsigned char red, unsigned char green, unsigned char blue)
+int	rgb_to_int(unsigned char r, unsigned char g, unsigned char b)
 {
 	int				color;
 	unsigned char	*color_ptr;
 
 	color_ptr = (unsigned char *)&color;
-	color_ptr[0] = blue;
-	color_ptr[1] = green;
-	color_ptr[2] = red;
+	color_ptr[0] = b;
+	color_ptr[1] = g;
+	color_ptr[2] = r;
 	color_ptr[3] = 0;
 	return (color);
 }

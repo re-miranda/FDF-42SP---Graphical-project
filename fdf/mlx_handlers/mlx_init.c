@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 02:39:05 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 10:19:02 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:36:44 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ t_mlx	*init_mlx(int size_x, int size_y, char *window_title)
 	mlx->size_x = size_x;
 	mlx->size_y = size_y;
 	mlx->map = NULL;
+	mlx->global_multiplier = 10;
 	return (mlx);
 }
