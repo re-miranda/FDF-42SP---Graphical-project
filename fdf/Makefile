@@ -12,7 +12,7 @@ LIBFT_PATH = ../libft
 CC = gcc
 AR = ar -rcs
 RM = rm -rf
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 #FILES
 SRCS = fdf.c exit_routines.c \
