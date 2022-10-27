@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 04:09:02 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/26 11:10:48 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:23:55 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ int	action_hook(int keycode, t_mlx *mlx)
 void	init_input(t_mlx *mlx)
 {
 	mlx_key_hook (mlx->window, &action_hook, mlx);
+	mlx_expose_hook (mlx->window, &put_map, mlx);
+	mlx_hook(mlx->window, 17, 0L, &escape, mlx);
 	mlx_loop(mlx->ptr);
 }

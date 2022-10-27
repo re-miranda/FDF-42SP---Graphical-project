@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 23:52:30 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 02:34:02 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:23:03 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	free_map(t_mlx *mlx)
 	free(mlx->map);
 }
 
-void	escape(t_mlx *mlx)
+int	escape(t_mlx *mlx)
 {
 	mlx_destroy_window (mlx->ptr, mlx->window);
 	mlx_destroy_display (mlx->ptr);

@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 08:23:48 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/27 02:26:55 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:23:17 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		bresenham(t_bresen *line, t_mlx *mlx);
 // MAP_DRAW
 void		draw_map(t_mlx *mlx);
 // PUT_TO_SCREEN
-void		put_map(t_mlx *mlx);
+int			put_map(t_mlx *mlx);
 void		put_blue_screen(t_mlx *mlx);
 
 // MAP_CENTRALIZE
@@ -101,6 +101,6 @@ t_map		*get_next_node(t_mlx *mlx);
 void		map_node_iterate(void (*f)(t_map *, t_mlx *), t_mlx *mlx);
 
 // EXIT_ROUTINES.C
-void		escape(t_mlx *mlx);
+int			escape(t_mlx *mlx);
 
 #endif

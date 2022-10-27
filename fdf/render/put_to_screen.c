@@ -6,19 +6,20 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 23:55:32 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/26 11:00:29 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:13:45 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-void	put_map(t_mlx *mlx)
+int	put_map(t_mlx *mlx)
 {
 	mlx->img = init_image(mlx, 500, 500);
 	mlx->color = rgb_to_int(255, 255, 255);
 	draw_map(mlx);
 	mlx_put_image_to_window (mlx->ptr, mlx->window, mlx->img->ptr, 0, 0);
 	destroy_image(mlx);
+	return (0);
 }
 
 void	put_blue_screen(t_mlx *mlx)
