@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:14:54 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/27 09:59:29 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 11:10:16 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	count_digits_in_line(char *line)
 			x++;
 			while (ft_isdigit(*line))
 				line++;
+			if (*line == ',')
+				line += 9;
 		}
 	}
 	return (x);
@@ -38,8 +40,8 @@ static int	map_validation(char	*map, int *x, int *y)
 		return (1);
 	while (*map && *map != '\n')
 	{
-		// if (count_digits_in_line(map) != *x)
-		// 	return (2);
+		if (count_digits_in_line(map) != *x)
+			return (2);
 		y[0]++;
 		map = ft_strchr(map, '\n') + 1;
 	}

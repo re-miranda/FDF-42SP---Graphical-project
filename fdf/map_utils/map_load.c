@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:14:54 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/27 02:50:23 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 11:06:38 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	fill_array(t_map *formatted_map, char *split_map, int x, int y)
 			i++;
 		while (ft_isdigit(split_map[i]))
 			i++;
+		if (split_map[i] == ',')
+			i += 9;
 		i++;
 	}
 }
