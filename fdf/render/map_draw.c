@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:06:39 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 10:36:12 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 02:20:05 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,32 @@
 
 static void	line_down(int i, int j, t_mlx *mlx)
 {
-	int	endian;
-	int	x0;
-	int	x1;
-	int	y0;
-	int	y1;
+	int			endian;
+	t_bresen	line;
 
 	endian = j + 1 - mlx->map_size_y;
 	if (!endian)
 		return ;
-	x0 = mlx->map[j][i].x;
-	y0 = mlx->map[j][i].y - mlx->map[j][i].z;
-	x1 = mlx->map[j + 1][i].x;
-	y1 = mlx->map[j + 1][i].y - mlx->map[j + 1][i].z;
-	bresenham(x0, y0, x1, y1, mlx);
+	line.x0 = mlx->map[j][i].x;
+	line.y0 = mlx->map[j][i].y - mlx->map[j][i].z;
+	line.x1 = mlx->map[j + 1][i].x;
+	line.y1 = mlx->map[j + 1][i].y - mlx->map[j + 1][i].z;
+	bresenham(&line, mlx);
 }
 
 static void	line_right(int i, int j, t_mlx *mlx)
 {
-	int	endian;
-	int	x0;
-	int	x1;
-	int	y0;
-	int	y1;
+	int			endian;
+	t_bresen	line;
 
 	endian = i + 1 - mlx->map_size_x;
 	if (!endian)
 		return ;
-	x0 = mlx->map[j][i].x;
-	y0 = mlx->map[j][i].y - mlx->map[j][i].z;
-	x1 = mlx->map[j][i + 1].x;
-	y1 = mlx->map[j][i + 1].y - mlx->map[j][i + 1].z;
-	bresenham(x0, y0, x1, y1, mlx);
+	line.x0 = mlx->map[j][i].x;
+	line.y0 = mlx->map[j][i].y - mlx->map[j][i].z;
+	line.x1 = mlx->map[j][i + 1].x;
+	line.y1 = mlx->map[j][i + 1].y - mlx->map[j][i + 1].z;
+	bresenham(&line, mlx);
 }
 
 void	draw_map(t_mlx *mlx)

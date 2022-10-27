@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 08:23:48 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/26 11:23:19 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 02:26:55 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ typedef struct s_bresen
 	int	y1;
 	int	dx;
 	int	dy;
-	int	adx;
-	int	ady;
 	int	sx;
 	int	sy;
-	int	eps;
 }	t_bresen;
 
 typedef struct s_map
@@ -74,7 +71,7 @@ int			rgb_to_int(unsigned char r, unsigned char g, unsigned char b);
 void		pixel_to_image(t_mlx *mlx, int color, int x, int y);
 
 // BRESENHAM_LINE
-void		bresenham(int x0, int y0, int x1, int y1, t_mlx *mlx);
+void		bresenham(t_bresen *line, t_mlx *mlx);
 // MAP_DRAW
 void		draw_map(t_mlx *mlx);
 // PUT_TO_SCREEN
@@ -96,6 +93,8 @@ void		func_multiply_down(t_map *node_addr, t_mlx *mlx);
 void		func_increase_z(t_map *node_addr, t_mlx *mlx);
 void		func_decrease_z(t_map *node_addr, t_mlx *mlx);
 // MAP_LOAD
+t_map		**load_map(char *crude_map, int x, int y);
+// MAP_OPEN
 int			get_map(char *path, t_mlx *mlx);
 // MAP_TOOLS
 t_map		*get_next_node(t_mlx *mlx);

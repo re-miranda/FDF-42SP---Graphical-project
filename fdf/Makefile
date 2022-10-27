@@ -25,6 +25,7 @@ SRCS = fdf.c exit_routines.c \
 	map_utils/map_funcs_transform.c \
 	map_utils/map_funcs_zoom.c \
 	map_utils/map_load.c \
+	map_utils/map_open.c \
 	map_utils/map_tools.c \
 	map_utils/map_isometric.c \
 	map_utils/map_centralize.c

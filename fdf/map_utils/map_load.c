@@ -6,113 +6,55 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:14:54 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/26 11:21:42 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 02:50:23 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "map_utils.h"
 #include "../fdf.h"
-#include <fcntl.h>
 
-static t_map	**load_map(char *crude_map, int x, int y)
+static int	fill_node(t_map *formatted_map, char *split_map, int xi, int y)
+{
+	if (ft_isdigit(*split_map) || *split_map == '-')
+	{
+		formatted_map[xi].x = xi;
+		formatted_map[xi].y = y;
+		formatted_map[xi].z = ft_atoi(split_map);
+		return (1);
+	}
+	return (0);
+}
+
+static void	fill_array(t_map *formatted_map, char *split_map, int x, int y)
+{
+	int		xi;
+	int		i;
+
+	xi = 0;
+	i = 0;
+	while (xi < x)
+	{
+		xi += fill_node(formatted_map, split_map + i, xi, y);
+		if (split_map[i] == '-')
+			i++;
+		while (ft_isdigit(split_map[i]))
+			i++;
+		i++;
+	}
+}
+
+t_map	**load_map(char *crude_map, int x, int y)
 {
 	t_map	**formatted_map;
 	char	**split_map;
-	int		xi;
-	int		i;
 
 	split_map = ft_split(crude_map, '\n');
 	formatted_map = (t_map **)calloc((y + 1), sizeof(t_map *));
 	while (y--)
 	{
-		xi = 0;
-		i = 0;
 		formatted_map[y] = (t_map *)calloc((x + 1), sizeof(t_map));
-		while (xi < x)
-		{
-			if (ft_isdigit(split_map[y][i]) || split_map[y][i] == '-')
-			{
-				formatted_map[y][xi].x = xi;
-				formatted_map[y][xi].y = y;
-				formatted_map[y][xi].z = ft_atoi(split_map[y] + i);
-				xi++;
-			}
-			if (split_map[y][i] == '-')
-				i++;
-			while (ft_isdigit(split_map[y][i]))
-				i++;
-			i++;
-		}
+		fill_array(formatted_map[y], split_map[y], x, y);
 		free(split_map[y]);
 	}
 	free(split_map);
 	return (formatted_map);
-}
-
-static int	count_digits_in_line(char *line)
-{
-	int	x;
-
-	x = 0;
-	while (*line && *line != '\n')
-		if (ft_isdigit(*line++))
-		{
-			x++;
-			while (ft_isdigit(*line))
-				line++;
-		}
-	return (x);
-}
-
-static int	map_validation(char	*map, int *x, int *y)
-{
-	*x = count_digits_in_line(map);
-	*y = 0;
-	if (!*x)
-		return (1);
-	while (*map && *map != '\n')
-	{
-		if (count_digits_in_line(map) != *x)
-			return (2);
-		y[0]++;
-		map = ft_strchr(map, '\n') + 1;
-	}
-	return (0);
-}
-
-static char	*open_map(char *path)
-{
-	int		fd;
-	char	*map;
-
-	fd = open(path, O_RDONLY);
-	if (!fd)
-		return (NULL);
-	map = get_whole_file(fd);
-	close(fd);
-	return (map);
-}
-
-int	get_map(char *path, t_mlx *mlx)
-{
-	char	*file_contents;
-	int		x;
-	int		y;
-
-	file_contents = open_map(path);
-	if (!file_contents)
-		return (1);
-	if (map_validation(file_contents, &x, &y))
-	{
-		free(file_contents);
-		return (2);
-	}
-	mlx->map_size_x = x;
-	mlx->map_size_y = y;
-	mlx->map = load_map(file_contents, x, y);
-	free(file_contents);
-	if (!mlx->map)
-		return (3);
-	isometric_projection(mlx);
-	return (0);
 }

@@ -6,95 +6,76 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 09:10:36 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/25 02:27:44 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/27 02:21:40 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-static void	y_axis_pixel(t_bresen *bresen, t_mlx *mlx)
+static void	low_slope(t_bresen *line, t_mlx *mlx)
 {
-	pixel_to_image(mlx, mlx->color, bresen->x0, bresen->y0);
-	bresen->eps += bresen->adx;
-	if (bresen->eps * 2 >= bresen->ady)
-	{
-		bresen->x0 += bresen->sx;
-		bresen->eps -= bresen->ady;
-	}
-}
+	int	decisive;
+	int	ppl;
 
-static void	x_axis_pixel(t_bresen *bresen, t_mlx *mlx)
-{
-	pixel_to_image(mlx, mlx->color, bresen->x0, bresen->y0);
-	bresen->eps += bresen->ady;
-	if (bresen->eps * 2 >= bresen->adx)
+	decisive = 0;
+	ppl = 0;
+	pixel_to_image(mlx, mlx->color, line->x0, line->y0);
+	decisive = (2 * line->dy) - line->dx;
+	while (ppl < line->dx)
 	{
-		bresen->y0 += bresen->sy;
-		bresen->eps -= bresen->adx;
-	}
-}
-
-static void	y_axis_fast(t_bresen *bresen, t_mlx *mlx)
-{
-	if (bresen->sy < 0)
-	{
-		while (bresen->y0 >= bresen->y1)
+		ppl++;
+		line->x0 += line->sx;
+		if (decisive < 0)
+			decisive += (2 * line->dy);
+		else
 		{
-			y_axis_pixel(bresen, mlx);
-			bresen->y0 += bresen->sy;
+			line->y0 += line->sy;
+			decisive += ((2 * line->dy) - (2 * line->dx));
 		}
+		pixel_to_image(mlx, mlx->color, line->x0, line->y0);
 	}
+}
+
+static void	high_slope(t_bresen *line, t_mlx *mlx)
+{
+	int	decisive;
+	int	ppl;
+
+	decisive = 0;
+	ppl = 0;
+	pixel_to_image(mlx, mlx->color, line->x0, line->y0);
+	decisive = (2 * line->dx) - line->dy;
+	while (ppl < line->dy)
+	{
+		ppl++;
+		line->y0 += line->sy;
+		if (decisive < 0)
+			decisive += (2 * line->dx);
+		else
+		{
+			line->x0 += line->sx;
+			decisive += ((2 * line->dx) - (2 * line->dy));
+		}
+		pixel_to_image(mlx, mlx->color, line->x0, line->y0);
+	}
+}
+
+void	bresenham(t_bresen *line, t_mlx *mlx)
+{
+	line->dx = (line->x1 - line->x0);
+	if (line->dx > 0)
+		line->sx = 1;
 	else
-	{
-		while (bresen->y0 <= bresen->y1)
-		{
-			y_axis_pixel(bresen, mlx);
-			bresen->y0 += bresen->sy;
-		}
-	}
-}
-
-static void	x_axis_fast(t_bresen *bresen, t_mlx *mlx)
-{
-	if (bresen->sx < 0)
-	{
-		while (bresen->x0 >= bresen->x1)
-		{
-			x_axis_pixel(bresen, mlx);
-			bresen->x0 += bresen->sx;
-		}
-	}
+		line->sx = -1;
+	line->dx = abs(line->dx);
+	line->dy = (line->y1 - line->y0);
+	if (line->dy > 0)
+		line->sy = 1;
 	else
-	{
-		while (bresen->x0 <= bresen->x1)
-		{
-			x_axis_pixel(bresen, mlx);
-			bresen->x0 += bresen->sx;
-		}
-	}
-}
-
-void	bresenham(int x0, int y0, int x1, int y1, t_mlx *mlx)
-{
-	t_bresen	bresen;
-
-	bresen.x0 = x0;
-	bresen.x1 = x1;
-	bresen.y0 = y0;
-	bresen.y1 = y1;
-	bresen.dx = bresen.x1 - bresen.x0;
-	bresen.dy = bresen.y1 - bresen.y0;
-	bresen.adx = ft_abs(bresen.dx);
-	bresen.ady = ft_abs(bresen.dy);
-	bresen.sx = -1;
-	if (bresen.dx > 0)
-		bresen.sx = 1;
-	bresen.sy = -1;
-	if (bresen.dy > 0)
-		bresen.sy = 1;
-	bresen.eps = 0;
-	if (bresen.adx > bresen.ady)
-		x_axis_fast(&bresen, mlx);
+		line->sy = -1;
+	line->dy = abs(line->dy);
+	if (line->dx > line->dy)
+		low_slope(line, mlx);
 	else
-		y_axis_fast(&bresen, mlx);
+		high_slope(line, mlx);
 }
