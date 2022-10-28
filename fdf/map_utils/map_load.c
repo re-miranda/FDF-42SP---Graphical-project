@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:14:54 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/28 11:35:15 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/28 12:44:46 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,19 @@ static void	fill_matrix(char **file_content_split, t_map **map, int x, int y)
 	}
 }
 
-static void	map_information(char **split_map, t_mlx *mlx)
+static void	map_information(char *file_contents, char **split_map, t_mlx *mlx)
 {
+	int	i;
+
+	i = 0;
 	mlx->map_size_x = count_digits_in_line(*split_map);
 	mlx->map_size_y = 0;
-	while (*split_map)
+	while (split_map[i])
 	{
+		if (mlx->map_size_x != count_digits_in_line(split_map[i]))
+			abort_load(file_contents, split_map, mlx);
 		mlx->map_size_y++;
-		split_map++;
+		i++;
 	}
 }
 
@@ -72,7 +77,7 @@ void	load_map(char *file_contents, t_mlx *mlx)
 	int		y;
 
 	file_content_split = ft_split(file_contents, '\n');
-	map_information(file_content_split, mlx);
+	map_information(file_contents, file_content_split, mlx);
 	x = mlx->map_size_x;
 	y = mlx->map_size_y;
 	mlx->map = (t_map **)calloc((y + 1), sizeof(t_map *));

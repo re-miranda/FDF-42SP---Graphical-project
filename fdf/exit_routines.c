@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 23:52:30 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/28 11:32:18 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/28 12:46:26 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void	abort_load(char *file_contents, char **split, t_mlx *mlx)
 		i++;
 	}
 	free(split);
+	ft_printf("Loading aborted due to inconsistent line in the file.\n");
 	escape(mlx);
 }
