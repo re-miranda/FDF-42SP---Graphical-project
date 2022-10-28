@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 23:52:30 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/27 10:23:03 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/28 11:32:18 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,24 @@ int	escape(t_mlx *mlx)
 	mlx_destroy_display (mlx->ptr);
 	if (mlx->ptr)
 		free(mlx->ptr);
-	free_map(mlx);
+	if (mlx->map)
+		free_map(mlx);
 	if (mlx)
 		free(mlx);
 	exit (0);
+}
+
+void	abort_load(char *file_contents, char **split, t_mlx *mlx)
+{
+	int	i;
+
+	i = 0;
+	free(file_contents);
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+	escape(mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:14:54 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/27 11:06:38 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/28 11:35:15 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	fill_node(t_map *formatted_map, char *split_map, int xi, int y)
 	return (0);
 }
 
-static void	fill_array(t_map *formatted_map, char *split_map, int x, int y)
+static void	fill_line(t_map *formatted_map, char *split_map, int x, int y)
 {
 	int		xi;
 	int		i;
@@ -33,30 +33,49 @@ static void	fill_array(t_map *formatted_map, char *split_map, int x, int y)
 	i = 0;
 	while (xi < x)
 	{
-		xi += fill_node(formatted_map, split_map + i, xi, y);
-		if (split_map[i] == '-')
-			i++;
-		while (ft_isdigit(split_map[i]))
-			i++;
-		if (split_map[i] == ',')
-			i += 9;
-		i++;
+		if (ft_isdigit(*split_map))
+		{
+			xi += fill_node(formatted_map, split_map + i, xi, y);
+			while (*split_map && *split_map != '\n' && *split_map != ' ')
+				split_map++;
+		}
+		else
+			split_map++;
 	}
 }
 
-t_map	**load_map(char *crude_map, int x, int y)
+static void	fill_matrix(char **file_content_split, t_map **map, int x, int y)
 {
-	t_map	**formatted_map;
-	char	**split_map;
-
-	split_map = ft_split(crude_map, '\n');
-	formatted_map = (t_map **)calloc((y + 1), sizeof(t_map *));
 	while (y--)
 	{
-		formatted_map[y] = (t_map *)calloc((x + 1), sizeof(t_map));
-		fill_array(formatted_map[y], split_map[y], x, y);
-		free(split_map[y]);
+		map[y] = (t_map *)calloc((x + 1), sizeof(t_map));
+		fill_line(map[y], file_content_split[y], x, y);
+		free(file_content_split[y]);
 	}
-	free(split_map);
-	return (formatted_map);
+}
+
+static void	map_information(char **split_map, t_mlx *mlx)
+{
+	mlx->map_size_x = count_digits_in_line(*split_map);
+	mlx->map_size_y = 0;
+	while (*split_map)
+	{
+		mlx->map_size_y++;
+		split_map++;
+	}
+}
+
+void	load_map(char *file_contents, t_mlx *mlx)
+{
+	char	**file_content_split;
+	int		x;
+	int		y;
+
+	file_content_split = ft_split(file_contents, '\n');
+	map_information(file_content_split, mlx);
+	x = mlx->map_size_x;
+	y = mlx->map_size_y;
+	mlx->map = (t_map **)calloc((y + 1), sizeof(t_map *));
+	fill_matrix(file_content_split, mlx->map, mlx->map_size_x, mlx->map_size_y);
+	free(file_content_split);
 }

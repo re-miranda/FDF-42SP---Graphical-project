@@ -6,11 +6,28 @@
 /*   By: rmiranda <rmiranda@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 09:19:48 by rmiranda          #+#    #+#             */
-/*   Updated: 2022/10/26 11:15:46 by rmiranda         ###   ########.fr       */
+/*   Updated: 2022/10/28 11:33:51 by rmiranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
+
+int	count_digits_in_line(char *line)
+{
+	int	x;
+
+	x = 0;
+	while (*line && *line != '\n')
+	{
+		if (ft_isdigit(*line++))
+		{
+			x++;
+			while (*line && *line != '\n' && *line != ' ')
+				line++;
+		}
+	}
+	return (x);
+}
 
 t_map	*get_next_node(t_mlx *mlx)
 {
