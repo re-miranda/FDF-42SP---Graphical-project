@@ -33,10 +33,10 @@ OBJS = $(SRCS:%.c=%.o)
 
 all:	$(NAME)
 
-$(NAME):	$(LIBFT) $(OBJS)
+$(NAME):	$(LIBFT_PATH)/libft.a $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_PATH) -l$(LIBFT) $(MINILIBX)
 
-$(LIBFT):
+$(LIBFT_PATH)/libft.a:
 	make -C $(LIBFT_PATH) all
 
 %.o:	%.c
