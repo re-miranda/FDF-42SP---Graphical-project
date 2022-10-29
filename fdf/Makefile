@@ -6,10 +6,10 @@ LIBFT = ft
 MINILIBX =  -lmlx -lXext -lX11
 
 #LIBS_PATH
-LIBFT_PATH = ../libft
+LIBFT_PATH = ./libft
 
 #OTHER
-CC = gcc
+CC = cc
 AR = ar -rcs
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror
