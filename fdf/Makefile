@@ -9,7 +9,7 @@ MINILIBX =  -lmlx -lXext -lX11
 LIBFT_PATH = ../libft
 
 #OTHER
-CC = gcc
+CC = cc
 AR = ar -rcs
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror

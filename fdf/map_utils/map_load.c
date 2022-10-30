@@ -73,14 +73,10 @@ static void	map_information(char *file_contents, char **split_map, t_mlx *mlx)
 void	load_map(char *file_contents, t_mlx *mlx)
 {
 	char	**file_content_split;
-	int		x;
-	int		y;
 
 	file_content_split = ft_split(file_contents, '\n');
 	map_information(file_contents, file_content_split, mlx);
-	x = mlx->map_size_x;
-	y = mlx->map_size_y;
-	mlx->map = (t_map **)calloc((y + 1), sizeof(t_map *));
+	mlx->map = (t_map **)calloc((mlx->map_size_y + 1), sizeof(t_map *));
 	fill_matrix(file_content_split, mlx->map, mlx->map_size_x, mlx->map_size_y);
 	free(file_content_split);
 }
