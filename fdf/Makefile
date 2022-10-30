@@ -6,7 +6,7 @@ LIBFT = ft
 MINILIBX =  -lmlx -lXext -lX11
 
 #LIBS_PATH
-LIBFT_PATH = ../libft
+LIBFT_PATH = ./libft
 
 #OTHER
 CC = cc
