@@ -32,10 +32,6 @@ int	action_hook(int keycode, t_mlx *mlx)
 		map_node_iterate(func_increase_z, mlx);
 	if (keycode == XK_z)
 		map_node_iterate(func_decrease_z, mlx);
-	if (keycode == XK_i)
-		map_node_iterate(func_multiply_up, mlx);
-	if (keycode == XK_o)
-		map_node_iterate(func_multiply_down, mlx);
 	return (0);
 }
 
