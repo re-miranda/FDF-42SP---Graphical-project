@@ -88,6 +88,8 @@ void		func_translate_down(t_map *node_addr, t_mlx *mlx);
 void		func_translate_right(t_map *node_addr, t_mlx *mlx);
 void		func_translate_left(t_map *node_addr, t_mlx *mlx);
 // MAP_FUNCS_ZOOM
+void		func_multiply_up(t_map *node_addr, t_mlx *mlx);
+void		func_multiply_down(t_map *node_addr, t_mlx *mlx);
 void		func_increase_z(t_map *node_addr, t_mlx *mlx);
 void		func_decrease_z(t_map *node_addr, t_mlx *mlx);
 // MAP_LOAD
